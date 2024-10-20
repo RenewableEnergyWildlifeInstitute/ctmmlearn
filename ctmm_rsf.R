@@ -17,6 +17,7 @@ plot(DATA,error=2,R=treecover,main="Lowland tapir under tree cover")
 
 # select an autocorrelation model
 # for the moment rsf.fit only uses isotropic models
+# It is dangerous to fit isotropic to both movement and RSF.
 GUESS <- ctmm.guess(DATA,CTMM=ctmm(error=TRUE,isotropic=TRUE),interactive=FALSE)
 FIT <- ctmm.select(DATA,GUESS,trace=3)
 # save(FIT,file="data/tapir-iso.rda")
@@ -76,6 +77,7 @@ summary(RSF)
 
 treecover # 0-1 valued
 # relative selection of tree cover versus no tree cover
+# Gives estimate and uncertainty around the 
 exp( summary(RSF)$CI[1,] * (sqrt(1)-sqrt(0)) )
 
 # if you had more individuals and more significance (and transferable models)
@@ -96,6 +98,7 @@ names(SUIT) # brick with 3 layers (lower, point estimate, upper)
 plot(DATA,error=2,R=SUIT[['est']],col.grid=NA,main="suitability")
 
 # RSF-informed AKDE
+# Really fancy stuff. Every ernel has tree cover dependence in it when calculating the autocorrellated kernel density estimate (AKDE)
 help('akde')
 
 RAKDE <- akde(DATA,RSF,R=R,weights=TRUE)

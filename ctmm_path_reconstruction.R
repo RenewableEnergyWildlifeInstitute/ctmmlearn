@@ -86,7 +86,7 @@ plot(OD,col.level=NA)
 SIM <- simulate(DATA,FIT,dt=5 %#% 'min')
 plot(SIM)
 
-# If you have habitat values and want to know how much
+# If you have ( categorical) habitat values and want to know how much
 # time an animal spent you can calculate the weighted average:
 
 # sum(RASTER*OD) = E[RASTER]

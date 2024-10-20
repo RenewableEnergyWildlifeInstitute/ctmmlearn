@@ -27,7 +27,7 @@ help("overlap")
 #Note: these all must have compatible resolutions and alignments
 OVER <- overlap(AKDES)
 
-# This will generate an error because of incompatible grids
+# This will generate an error because of incompatible grids since the AKDE was estimated separately.
 overlap(list(akde(buffalo$Pepper, FITS$Pepper),
              akde(buffalo$Queen, FITS$Pepper)))
 
@@ -51,7 +51,7 @@ OVER$CI[,,"est"]
 # Encounter location distributions (CDE)
 #-----------------------------------------------------
 
-# where encounters are expected to take place
+# distribution of where encounters are expected to take place
 
 # Relevant paper: https://doi.org/10.1111/2041-210X.13597
 help("cde")
@@ -61,7 +61,7 @@ help("cde")
 plot(buffalo[c("Pepper", "Queen")],
      UD=AKDES[c("Pepper", "Queen")],
      col = c("#e76f51", "#264653"),
-     col.DF=c("#f4a261", "#2a9d8f"),
+     col.UD=c("#f4a261", "#2a9d8f"),
      col.grid = NA)
 
 
@@ -87,7 +87,7 @@ plot(buffalo[c("Pepper", "Queen")],
 # metrics that takes time into account (paper coming)
 help("proximity")
 
-#Pairwise separation distances
+#Pairwise separation distances. This is includes some level of error propogation, encertain how
 DISTS <- distances(buffalo[c("Cilla","Mvubu")],
                    FITS[c("Cilla","Mvubu")])
 
@@ -185,7 +185,7 @@ plot(N ~ enc_rad,
      col = "#5e548e")
 
 
-#Estimate relative encounter rates
+#Estimate relative encounter rates (proportion of total home range time that is spent within a certain number of meters, in this example, 100 meters)
 RATES <- encounter(AKDES,method="PDF")
 RATES$CI["Cilla","Mvubu",] * 100^2 # good for small distances
 tanh(sqrt(RATES$CI["Cilla","Mvubu",])*100)^2 # more reliable

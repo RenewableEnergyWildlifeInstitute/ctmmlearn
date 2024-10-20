@@ -26,7 +26,7 @@ plot(vg,GUESS)
 #Fit the models
 FIT <- ctmm.select(coati[[1]],
                    GUESS,
-                   cores = -1,
+                   #cores = -1,
                    trace = 3)
 
 
@@ -35,8 +35,11 @@ summary(FIT)
 
 
 #Simulate from the fitted model, with the original sampling times
+# Simulate potential movement locations (no habitat associations, just autocorrelation)
+# Simulate at the same timestamps as the actual data 
+# Can be used as a null contrast
 SIM <- simulate(FIT,
-                t = coati[[1]]$t)
+                t = coati[[1]]$t) #t = time
 
 
 #Visualise the results
@@ -47,10 +50,21 @@ plot(list(coati[[1]],
 
 
 #Draw model parameters from the sampling distribution of the fitted model
+# Range of model parameters
+# Emulate is just creating another model with different model fit statistics that are in line with the original
+# On its own, I'm not seeing the value of doing a single one as opposed to running 100s and ensembling the results
+# However, at a certain point, you're squeezing blood from a rock.
 FIT2 <- emulate(FIT,
                 fast = TRUE)
 
+FIT3 <- emulate(FIT,
+                fast = TRUE)
 
+FIT4 <- emulate(FIT,
+                fast = TRUE)
+
+FIT5 <- emulate(FIT,
+                fast = TRUE)
 
 #Simulate from the model
 SIM2 <- simulate(FIT2,
@@ -66,7 +80,7 @@ plot(list(coati[[1]],
              "grey30"))
 
 
-#Fill in the gaps 
+#Fill in the gaps of the original movement model and the original data 
 SIM3 <- simulate(coati[[1]],
                  CTMM = FIT,
                  dt = 60)
@@ -83,13 +97,15 @@ plot(list(coati[[1]],
 
 #######
 #Generate the most likely path (conditioned off of the fitted model)
+# Ignores any sort of resource selection function, that will be covered later.
+# Cannot currently 
 MLP <- predict(coati[[1]],
                FIT,
                dt = 60)
 
 plot(coati[[1]])
 plot(MLP,
-     error = FALSE,
+     error = F,
      type = "l",
      col = "blue",
      add = TRUE)

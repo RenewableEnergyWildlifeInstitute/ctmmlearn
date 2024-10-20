@@ -31,13 +31,18 @@ plot(DATA,col=color(DATA,by='time'),error=FALSE)
 FIT <- ctmm.select(DATA,FIT,trace=3)
 
 # the speed estimate here is RMS Gaussian
+# Under the assumtion that the animal occupies the elliptical gaussian space, somewhat informative, but better to run the speed estimate
+# IF you can only have speed for some animals and report, that is problematic because it becomes a non-randome sample
+# Diffusion will be comparable across different sampling rates if you have information, more valuable to compare across animals
 summary(FIT)
 
 # Gaussian (regular speed - not RMS)
+# Not realistic, shouldn't really be used
 speed(FIT)
 
 # non-parametric speed estimation
 # "2019 Noonan Fleming Akre ... Calabrese.pdf" in Readings/Continuous_Time folder
+# Speed of the model, conditional upon the data
 SPD <- speed(DATA,FIT)
 SPD
 
@@ -74,7 +79,7 @@ help('meta')
 #Load in the fitted movement models
 load("data/buffalo.rda")
 
-#Estimate mean spead for each animal
+#Estimate mean speed for each animal
 SPEEDS <- list()
 for(i in 1:length(buffalo))
 {
