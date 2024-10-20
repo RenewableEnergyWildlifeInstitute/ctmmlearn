@@ -275,6 +275,7 @@ summary(c(FITS,FITS2))
 ################
 
 # simulate data from the selected model with same times
+# includes same schedulin from the original sampling data.
 SIM <- simulate(FITS[[1]],t=DATA$t)
 
 # plot data
