@@ -47,8 +47,8 @@ head(turtle[[1]])
 help("uere.fit")
 
 # fit error parameters to calibration data
+# do not run uere.fit on tracking data, the first two datasets are in this example are calibration
 UERE <- uere.fit(turtle[1:2])
-# do not run uere.fit on tracking data
 
 # estimated error model parameters
 summary(UERE)
